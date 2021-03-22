@@ -1,45 +1,28 @@
 package br.com.curso.springboot.sistemavendas.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table(name = "CLIENTE")
+@Table(name = "TB_CLIENTE")
 @Data
 public class Cliente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idCliente;
 
-    @Column(name = "nome", length = 100)
-    private String nome;
+    @Column(name = "NM_CLIENTE", length = 100)
+    private String nmCliente;
 
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
-    private Set<Pedido> pedidos;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @Column(name = "DT_NASCTO")
+    private Date dtNascto;
 
-    public Cliente() {
-    }
+    @Column(name = "NR_RG", length = 20)
+    private String nrRg;
 
-    public Cliente(Integer id) {
-        this.id = id;
-    }
-
-    public Cliente(Integer id, String nome) {
-        this.id = id;
-        this.nome = nome;
-    }
-
-    public Cliente(String nome) {
-        this.nome = nome;
-    }
-
-    @Override
-    public String toString() {
-        return "Cliente{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                '}';
-    }
 }

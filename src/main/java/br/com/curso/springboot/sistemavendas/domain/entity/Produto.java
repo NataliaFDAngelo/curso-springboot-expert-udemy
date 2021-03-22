@@ -12,11 +12,11 @@ public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Integer id;
+    @Column(name = "CD_PRODUTO")
+    private Integer cdProduto;
 
-    @Column(name = "descricao")
-    private String descricao;
+    @Column(name = "DS_PRODUTO")
+    private String dsProduto;
 
     @Column(name = "preco_unitario")
     private BigDecimal precoUnitario;
