@@ -6,19 +6,19 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "produto")
+@Table(name = "TB_PRODUTO")
 @Data
 public class Produto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CD_PRODUTO")
     private Integer cdProduto;
 
     @Column(name = "DS_PRODUTO")
     private String dsProduto;
 
-    @Column(name = "preco_unitario")
+    @Column(name = "PRECO_UNITARIO")
     private BigDecimal precoUnitario;
 
 }

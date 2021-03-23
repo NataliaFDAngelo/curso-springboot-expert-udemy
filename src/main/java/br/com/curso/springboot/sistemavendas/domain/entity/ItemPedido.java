@@ -5,22 +5,24 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "item_pedido")
+@Table(name = "TB_PEDIDO_ITEM")
 @Data
 public class ItemPedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @Column(name = "ID_PEDIDO_ITEM")
+    private Integer idPedidoItem;
 
     @ManyToOne
-    @JoinColumn(name = "pedido_id")
+    @JoinColumn(name = "ID_PEDIDO")
     private Pedido pedido;
 
     @ManyToOne
-    @JoinColumn(name = "produto_id")
+    @JoinColumn(name = "CD_PRODUTO")
     private Produto produto;
 
+    @Column(name = "QUANTIDADE")
     private Integer quantidade;
 
 }
