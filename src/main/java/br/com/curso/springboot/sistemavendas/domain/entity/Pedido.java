@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "TB_PEDIDO")
+@Data
 public class Pedido {
 
     @Id
@@ -25,7 +26,7 @@ public class Pedido {
     @Column(name = "TOTAL")
     private BigDecimal total;
 
-    @OneToMany(mappedBy = "pedido")
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<ItemPedido> itens;
 
 }
