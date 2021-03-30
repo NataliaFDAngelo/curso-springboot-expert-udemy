@@ -9,7 +9,7 @@ import java.util.Set;
 @Entity
 @Table(name = "TB_CLIENTE")
 @Data
-public class Cliente {
+public class ClienteEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class Cliente {
     @Column(name = "DT_NASCTO")
     private Date dtNascto;
 
-    @Column(name = "NR_RG", length = 20)
-    private String nrRg;
+    @Column(name = "NR_CPF", length = 20)
+    private String nrCpf;
 
 }

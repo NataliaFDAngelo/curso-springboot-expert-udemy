@@ -18,7 +18,7 @@ public class Pedido {
 
     @ManyToOne
     @JoinColumn(name = "ID_CLIENTE")
-    private Cliente cliente;
+    private ClienteEntity clienteEntity;
 
     @Column(name = "DATA_PEDIDO")
     private LocalDate dataPedido;

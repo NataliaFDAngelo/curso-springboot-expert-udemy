@@ -1,6 +1,6 @@
 package br.com.curso.springboot.sistemavendas.service;
 
-import br.com.curso.springboot.sistemavendas.domain.entity.Cliente;
+import br.com.curso.springboot.sistemavendas.domain.entity.ClienteEntity;
 import br.com.curso.springboot.sistemavendas.domain.entity.ItemPedido;
 import br.com.curso.springboot.sistemavendas.domain.entity.Pedido;
 import br.com.curso.springboot.sistemavendas.domain.entity.Produto;
@@ -49,7 +49,7 @@ public class PedidoService {
     public Pedido salvarPedido(PedidoDTO pedidoDTO){
 
         Integer idCliente = pedidoDTO.getCliente();
-        Cliente cliente = clienteRepository
+        ClienteEntity clienteEntity = clienteRepository
                 .findById(idCliente)
                 .orElseThrow(() -> new RegraNegocioException("Código de cliente inválido."));
 
@@ -57,7 +57,7 @@ public class PedidoService {
 
         pedidoEntity.setDataPedido(LocalDate.now());
         pedidoEntity.setTotal(pedidoDTO.getTotal());
-        pedidoEntity.setCliente(cliente);
+        pedidoEntity.setClienteEntity(clienteEntity);
 
         List<ItemPedido> itemsPedido = converterItems(pedidoEntity, pedidoDTO.getItems());
 
