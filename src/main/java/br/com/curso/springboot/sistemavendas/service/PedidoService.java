@@ -3,7 +3,7 @@ package br.com.curso.springboot.sistemavendas.service;
 import br.com.curso.springboot.sistemavendas.domain.entity.ClienteEntity;
 import br.com.curso.springboot.sistemavendas.domain.entity.ItemPedido;
 import br.com.curso.springboot.sistemavendas.domain.entity.Pedido;
-import br.com.curso.springboot.sistemavendas.domain.entity.Produto;
+import br.com.curso.springboot.sistemavendas.domain.entity.ProdutoEntity;
 import br.com.curso.springboot.sistemavendas.domain.repository.ClienteRepository;
 import br.com.curso.springboot.sistemavendas.domain.repository.ItemsPedidoRepository;
 import br.com.curso.springboot.sistemavendas.domain.repository.PedidoRepository;
@@ -78,7 +78,7 @@ public class PedidoService {
 
         return items.stream().map(dto ->{
             Integer idProduto = dto.getProduto();
-            Produto produto = produtoRepository.findById(idProduto)
+            ProdutoEntity produtoEntity = produtoRepository.findById(idProduto)
                     .orElseThrow(
                             () -> new RegraNegocioException("Código de produto inválido: "
                             + idProduto));
@@ -87,7 +87,7 @@ public class PedidoService {
             ItemPedido itemPedido = new ItemPedido();
             itemPedido.setQuantidade(dto.getQuantidade());
             itemPedido.setPedido(pedido);
-            itemPedido.setProduto(produto);
+            itemPedido.setProdutoEntity(produtoEntity);
 
             return itemPedido;
         }).collect(Collectors.toList());

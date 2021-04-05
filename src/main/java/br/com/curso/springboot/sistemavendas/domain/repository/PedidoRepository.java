@@ -8,5 +8,5 @@ import java.util.Set;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 
-    Set<Pedido> findByCliente (ClienteEntity clienteEntity);
+//    Set<Pedido> findByCliente (ClienteEntity clienteEntity);
 }

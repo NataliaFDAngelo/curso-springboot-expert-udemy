@@ -1,6 +1,6 @@
 package br.com.curso.springboot.sistemavendas.service;
 
-import br.com.curso.springboot.sistemavendas.domain.entity.Produto;
+import br.com.curso.springboot.sistemavendas.domain.entity.ProdutoEntity;
 import br.com.curso.springboot.sistemavendas.domain.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,21 +14,21 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    public List<Produto> listarProdutos(){
+    public List<ProdutoEntity> listarProdutos(){
         return produtoRepository.findAll();
     }
 
-    public Optional<Produto> buscarProdutoPorId(Integer id){
+    public Optional<ProdutoEntity> buscarProdutoPorId(Integer id){
         return produtoRepository.findById(id);
     }
 
-    public List<Produto> buscarProdutoPorNome(String nome){
+    public List<ProdutoEntity> buscarProdutoPorNome(String nome){
         return produtoRepository.findByDsProdutoContaining(nome);
     }
 
-    public Produto salvarProduto(Produto produto){
+    public ProdutoEntity salvarProduto(ProdutoEntity produto){
 
-        Produto produtoEntity = new Produto();
+        ProdutoEntity produtoEntity = new ProdutoEntity();
 
         produtoEntity.setDsProduto(produto.getDsProduto());
         produtoEntity.setPrecoUnitario(produto.getPrecoUnitario());
@@ -36,12 +36,12 @@ public class ProdutoService {
         return produtoRepository.save(produtoEntity);
     }
 
-    public Boolean atualizarProduto(Produto produto, Integer id){
+    public Boolean atualizarProduto(ProdutoEntity produto, Integer id){
 
-        Optional<Produto> produtoOptional = produtoRepository.findById(id);
+        Optional<ProdutoEntity> produtoOptional = produtoRepository.findById(id);
 
         if(produtoOptional.isPresent()){
-            Produto produtoEntity = produtoOptional.get();
+            ProdutoEntity produtoEntity = produtoOptional.get();
 
             produtoEntity.setDsProduto(produto.getDsProduto());
             produtoEntity.setPrecoUnitario(produto.getPrecoUnitario());
@@ -55,7 +55,7 @@ public class ProdutoService {
 
     public Boolean deletarProduto(Integer id){
 
-        Optional<Produto> produtoOptional = produtoRepository.findById(id);
+        Optional<ProdutoEntity> produtoOptional = produtoRepository.findById(id);
 
         if(produtoOptional.isPresent()){
             produtoRepository.deleteById(id);

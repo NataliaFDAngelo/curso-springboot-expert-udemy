@@ -20,7 +20,7 @@ public class ItemPedido {
 
     @ManyToOne
     @JoinColumn(name = "CD_PRODUTO")
-    private Produto produto;
+    private ProdutoEntity produtoEntity;
 
     @Column(name = "QUANTIDADE")
     private Integer quantidade;

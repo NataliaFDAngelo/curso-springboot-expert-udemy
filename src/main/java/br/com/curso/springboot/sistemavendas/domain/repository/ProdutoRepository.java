@@ -1,12 +1,12 @@
 package br.com.curso.springboot.sistemavendas.domain.repository;
 
-import br.com.curso.springboot.sistemavendas.domain.entity.Produto;
+import br.com.curso.springboot.sistemavendas.domain.entity.ProdutoEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
+public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Integer> {
 
-    List<Produto> findByDsProdutoContaining(String nome);
+    List<ProdutoEntity> findByDsProdutoContaining(String nome);
 
 }

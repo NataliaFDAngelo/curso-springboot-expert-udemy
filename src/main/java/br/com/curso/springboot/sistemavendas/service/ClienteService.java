@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,7 +62,10 @@ public class ClienteService {
             clienteDTOS.add(clienteDTO);
         }
         return clienteDTOS;
+    }
 
+    public List<ClienteEntity> consultarClientePorCpf(String nrCpf){
+        return clienteRepository.findByNrCpf(nrCpf);
     }
 
     //Retornando DTO
@@ -100,42 +101,46 @@ public class ClienteService {
         return clienteRepository.findByNmClienteContaining(nmCliente);
     }
 
-    //Salvar DTO
-//    @Transactional
-//    public String cadastrarCliente(ClienteDTO clienteDTO){
-//
-//        ClienteEntity clienteEntity = new ClienteEntity();
-//
-//        String cpf = clienteEntity.getNrCpf();
-//        List<ClienteEntity> clienteExistente = clienteRepository.findByNrCpf(cpf);
-//
-//        if(clienteExistente.isEmpty()){
-//            clienteEntity = conversaoClienteEntity(clienteDTO, clienteEntity);
-//            clienteRepository.save(clienteEntity);
-//
-//            return "Cliente cadastrado com sucesso.";
-//        }
-//
-//        return "Erro: CPF já cadastrado.";
-//    }
-//
-//    @Transactional
-//    public String alterarCliente(ClienteDTO clienteDTO, Integer idCliente){
-//
-//        ClienteEntity clienteEntity = getCliente(idCliente);
-//        clienteEntity = conversaoClienteEntity(clienteDTO, clienteEntity);
-//
-//        clienteEntity = clienteRepository.save(clienteEntity);
-//
-//        return "Alteração realizada com sucesso.";
-//    }
-//
-//    @Transactional
-//    public String excluirCliente(Integer idCliente){
-//
-//        clienteRepository.deleteById(idCliente);
-//
-//        return "Exclusão do cliente realizada com sucesso.";
-//    }
+    public List<ClienteEntity> buscarPorCpf(String nrCpf){
+        return clienteRepository.findByNrCpf(nrCpf);
+    }
+
+//    Salvar DTO
+    @Transactional
+    public String cadastrarCliente(ClienteDTO clienteDTO){
+
+        ClienteEntity clienteEntity = new ClienteEntity();
+
+        String cpf = clienteEntity.getNrCpf();
+        List<ClienteEntity> clienteExistente = clienteRepository.findByNrCpf(cpf);
+
+        if(clienteExistente.isEmpty()){
+            clienteEntity = conversaoClienteEntity(clienteDTO, clienteEntity);
+            clienteRepository.save(clienteEntity);
+
+            return "Cliente cadastrado com sucesso.";
+        }
+
+        return "Erro: CPF já cadastrado.";
+    }
+
+    @Transactional
+    public String alterarCliente(ClienteDTO clienteDTO, Integer idCliente){
+
+        ClienteEntity clienteEntity = getCliente(idCliente);
+        clienteEntity = conversaoClienteEntity(clienteDTO, clienteEntity);
+
+        clienteEntity = clienteRepository.save(clienteEntity);
+
+        return "Alteração realizada com sucesso.";
+    }
+
+    @Transactional
+    public String excluirCliente(Integer idCliente){
+
+        clienteRepository.deleteById(idCliente);
+
+        return "Exclusão do cliente realizada com sucesso.";
+    }
 
 }

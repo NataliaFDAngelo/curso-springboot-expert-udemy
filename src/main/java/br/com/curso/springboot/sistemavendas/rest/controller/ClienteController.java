@@ -29,64 +29,65 @@ public class ClienteController {
         return ResponseEntity.status(HttpStatus.OK).body(clienteDTOS);
     }
 
-//    @GetMapping("cliente/filtro")
-//    public ResponseEntity buscarClientePorNome(@PathParam("nome") String nome){
-//
-//        List<ClienteEntity> clienteEntity = clienteService.buscarPorNome(nome);
-//
-//        if(clienteEntity.isEmpty()){
-//            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Cliente não localizado.");
-//        }
-//
-//        return ResponseEntity.status(HttpStatus.OK).body(clienteEntity);
-//    }
-//
-//    @GetMapping("cliente/{id}")
-//    public ResponseEntity buscarClientePorId(@PathVariable("id") Integer id){
-//
-//        Optional<ClienteEntity> cliente = clienteService.buscarPorId(id);
-//
-//        if(cliente.isPresent()){
-//            return ResponseEntity.status(HttpStatus.OK).body(cliente.get());
-//        }
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cliente não localizado.");
-//    }
-//
-//    @PostMapping("/cliente")
-//    public ResponseEntity salvarCliente(@RequestBody ClienteEntity clienteEntity){
-//
-//        ClienteEntity clienteEntityNovo = clienteService.salvarCliente(clienteEntity);
-//
-//        if(clienteEntity.getNmCliente().isEmpty()){
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O nome é obrigatório");
-//        }
-//        if(clienteEntity.getNrCpf().isEmpty()){
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O rg é obrigatório");
-//        }
-//        return ResponseEntity.status(HttpStatus.CREATED).body("Cliente salvo com sucesso" + clienteEntityNovo);
-//    }
-//
-//
-//    @PutMapping("/cliente/{id}")
-//    public ResponseEntity atualizarCliente(@RequestBody ClienteEntity clienteEntity, @PathVariable("id") Integer id){
-//
-//        Boolean retorno = clienteService.atualizarCliente(clienteEntity, id);
-//
-//        if (retorno){
-//            return ResponseEntity.status(HttpStatus.OK).body("Cliente atualizado com sucesso." + clienteEntity);
-//        }
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O cliente não foi atualizado.");
-//    }
-//
-//    @DeleteMapping("cliente/{id}")
-//    public ResponseEntity deletarCliente(@PathVariable("id") Integer id){
-//
-//        Boolean retorno = clienteService.deletarCliente(id);
-//
-//        if(retorno){
-//            return ResponseEntity.status(HttpStatus.OK).body("Cliente deletado com sucesso.");
-//        }
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O cliente não foi deletado.");
-//    }
+    @GetMapping("cliente/filtro")
+    public ResponseEntity buscarClientePorNome(@PathParam("nome") String nome){
+
+        List<ClienteEntity> clienteEntity = clienteService.buscarPorNome(nome);
+
+        if(clienteEntity.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Cliente não localizado.");
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(clienteEntity);
+    }
+
+    @GetMapping("cliente/{idCliente}")
+    public ResponseEntity buscarClientePorId(@PathVariable("idCliente") Integer idCliente){
+
+        ClienteDTO cliente = clienteService.getClienteDTO(idCliente);
+
+        if(cliente == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cliente não encontrado.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(cliente);
+    }
+
+    @GetMapping("cliente/cpf")
+    public ResponseEntity buscarClientePorCpf(@PathParam("cpf") String cpf) {
+
+        List<ClienteEntity> clienteEntityList = clienteService.consultarClientePorCpf(cpf);
+
+        return ResponseEntity.status(HttpStatus.OK).body(clienteEntityList);
+    }
+
+
+    @PostMapping("/cliente")
+    public ResponseEntity salvarCliente(@RequestBody ClienteDTO clienteDTO){
+
+        String clienteDTONovo = clienteService.cadastrarCliente(clienteDTO);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("Cliente salvo com sucesso" + clienteDTONovo);
+    }
+
+
+    @PutMapping("/cliente/{id}")
+    public ResponseEntity atualizarCliente(@RequestBody ClienteDTO clienteDTO, @PathVariable("id") Integer id){
+
+        String returnCiente = clienteService.alterarCliente(clienteDTO, id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(returnCiente);
+    }
+
+    @DeleteMapping("cliente/{id}")
+    public ResponseEntity deletarCliente(@PathVariable("id") Integer id){
+
+        String retorno = clienteService.excluirCliente(id);
+
+        if(retorno.isEmpty()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O cliente não foi deletado.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Cliente deletado com sucesso.");
+
+    }
 
 }
