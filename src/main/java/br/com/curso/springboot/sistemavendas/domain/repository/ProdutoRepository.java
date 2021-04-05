@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Integer> {
 
-    List<ProdutoEntity> findByDsProdutoContaining(String nome);
+    List<ProdutoEntity> findByDsProdutoContaining(String dsProduto);
 
 }

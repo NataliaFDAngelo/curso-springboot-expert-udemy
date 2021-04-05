@@ -1,6 +1,7 @@
 package br.com.curso.springboot.sistemavendas.rest.controller;
 
 import br.com.curso.springboot.sistemavendas.domain.entity.ProdutoEntity;
+import br.com.curso.springboot.sistemavendas.rest.dto.ProdutoDTO;
 import br.com.curso.springboot.sistemavendas.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,69 +19,69 @@ public class ProdutoController {
     private ProdutoService produtoService;
 
     @GetMapping("/produto")
-    public ResponseEntity listarProdutos(){
+    public ResponseEntity listarTodosProdutos(){
 
-        List<ProdutoEntity> produtoEntities = produtoService.listarProdutos();
+        List<ProdutoDTO> produtoDTOS = produtoService.getProdutosDTO();
 
-        if(produtoEntities.isEmpty()){
+        if(produtoDTOS.isEmpty()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nenhum produto encontrado.");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(produtoEntities);
+        return ResponseEntity.status(HttpStatus.OK).body(produtoDTOS);
     }
 
-    @GetMapping("/produto/filtro")
-    public ResponseEntity buscarProdutoNome(@PathParam ("nome") String nome){
-
-        List<ProdutoEntity> produtoEntityBuscado = produtoService.buscarProdutoPorNome(nome);
-
-        if(produtoEntityBuscado.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nenhum produto encontrado.");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(produtoEntityBuscado);
-    }
-
-    @GetMapping("/produto/{id}")
-    public ResponseEntity buscaProdutoId(@PathVariable("id") Integer id){
-
-        Optional<ProdutoEntity> produtoOptional = produtoService.buscarProdutoPorId(id);
-
-        if(produtoOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.OK).body(produtoOptional);
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nenhum produto encontrado.");
-
-    }
-
-    @PostMapping("/produto")
-    public ResponseEntity salvarProduto(@RequestBody ProdutoEntity produtoEntity){
-
-        ProdutoEntity produtoEntityNovo = produtoService.salvarProduto(produtoEntity);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body("Produto cadastrado com sucesso" + produtoEntityNovo);
-
-    }
-
-    @PutMapping("produto/{id}")
-    public ResponseEntity alterarProduto(@RequestBody ProdutoEntity produtoEntity, @PathVariable("id") Integer id){
-
-        Boolean retorno = produtoService.atualizarProduto(produtoEntity, id);
-
-        if(retorno){
-            return ResponseEntity.status(HttpStatus.OK).body("Produto alterado com sucesso.");
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Produto não alterado.");
-    }
-
-    @DeleteMapping("/produto/{id}")
-    public ResponseEntity excluirProduto(@PathVariable("id") Integer id){
-
-        Boolean retorno = produtoService.deletarProduto(id);
-
-        if(retorno){
-            return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso.");
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Produto não deletado.");
-    }
+//    @GetMapping("/produto/filtro")
+//    public ResponseEntity buscarProdutoNome(@PathParam ("nome") String nome){
+//
+//        List<ProdutoEntity> produtoEntityBuscado = produtoService.buscarProdutoPorNome(nome);
+//
+//        if(produtoEntityBuscado.isEmpty()) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nenhum produto encontrado.");
+//        }
+//        return ResponseEntity.status(HttpStatus.OK).body(produtoEntityBuscado);
+//    }
+//
+//    @GetMapping("/produto/{id}")
+//    public ResponseEntity buscaProdutoId(@PathVariable("id") Integer id){
+//
+//        Optional<ProdutoEntity> produtoOptional = produtoService.buscarProdutoPorId(id);
+//
+//        if(produtoOptional.isPresent()) {
+//            return ResponseEntity.status(HttpStatus.OK).body(produtoOptional);
+//        }
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nenhum produto encontrado.");
+//
+//    }
+//
+//    @PostMapping("/produto")
+//    public ResponseEntity salvarProduto(@RequestBody ProdutoEntity produtoEntity){
+//
+//        ProdutoEntity produtoEntityNovo = produtoService.salvarProduto(produtoEntity);
+//
+//        return ResponseEntity.status(HttpStatus.CREATED).body("Produto cadastrado com sucesso" + produtoEntityNovo);
+//
+//    }
+//
+//    @PutMapping("produto/{id}")
+//    public ResponseEntity alterarProduto(@RequestBody ProdutoEntity produtoEntity, @PathVariable("id") Integer id){
+//
+//        Boolean retorno = produtoService.atualizarProduto(produtoEntity, id);
+//
+//        if(retorno){
+//            return ResponseEntity.status(HttpStatus.OK).body("Produto alterado com sucesso.");
+//        }
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Produto não alterado.");
+//    }
+//
+//    @DeleteMapping("/produto/{id}")
+//    public ResponseEntity excluirProduto(@PathVariable("id") Integer id){
+//
+//        Boolean retorno = produtoService.deletarProduto(id);
+//
+//        if(retorno){
+//            return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso.");
+//        }
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Produto não deletado.");
+//    }
 
 
 }

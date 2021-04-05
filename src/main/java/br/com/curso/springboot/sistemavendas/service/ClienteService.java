@@ -6,7 +6,6 @@ import br.com.curso.springboot.sistemavendas.rest.dto.ClienteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +40,7 @@ public class ClienteService {
     public List<ClienteEntity> conversaoClientesEntity(List<ClienteDTO> clienteDTOS, List<ClienteEntity> clienteEntities){
 
         for (ClienteDTO clienteDTO : clienteDTOS){
+
             ClienteEntity clienteEntity = new ClienteEntity();
 
             clienteEntity = conversaoClienteEntity(clienteDTO, clienteEntity);
@@ -64,10 +64,6 @@ public class ClienteService {
         return clienteDTOS;
     }
 
-    public List<ClienteEntity> consultarClientePorCpf(String nrCpf){
-        return clienteRepository.findByNrCpf(nrCpf);
-    }
-
     //Retornando DTO
     public ClienteDTO getClienteDTO(Integer idCliente){
         ClienteEntity clienteEntity = getCliente(idCliente);
@@ -88,6 +84,7 @@ public class ClienteService {
     }
 
     //Retornando Entity
+
     public ClienteEntity getCliente(Integer idCliente){
         Optional<ClienteEntity> optional = clienteRepository.findById(idCliente);
         return optional.get();
@@ -101,11 +98,11 @@ public class ClienteService {
         return clienteRepository.findByNmClienteContaining(nmCliente);
     }
 
-    public List<ClienteEntity> buscarPorCpf(String nrCpf){
+    public List<ClienteEntity> consultarClientePorCpf(String nrCpf){
         return clienteRepository.findByNrCpf(nrCpf);
     }
 
-//    Salvar DTO
+    //Salvar DTO
     @Transactional
     public String cadastrarCliente(ClienteDTO clienteDTO){
 
@@ -124,6 +121,7 @@ public class ClienteService {
         return "Erro: CPF já cadastrado.";
     }
 
+    //Alterar DTO
     @Transactional
     public String alterarCliente(ClienteDTO clienteDTO, Integer idCliente){
 
@@ -135,6 +133,7 @@ public class ClienteService {
         return "Alteração realizada com sucesso.";
     }
 
+    //Excluir DTO
     @Transactional
     public String excluirCliente(Integer idCliente){
 
