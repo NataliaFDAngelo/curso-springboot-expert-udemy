@@ -128,7 +128,7 @@ public class ClienteService {
         ClienteEntity clienteEntity = getCliente(idCliente);
         clienteEntity = conversaoClienteEntity(clienteDTO, clienteEntity);
 
-        clienteEntity = clienteRepository.save(clienteEntity);
+        clienteRepository.save(clienteEntity);
 
         return "Alteração realizada com sucesso.";
     }

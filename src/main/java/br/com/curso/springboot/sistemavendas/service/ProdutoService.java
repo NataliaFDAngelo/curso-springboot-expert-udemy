@@ -1,10 +1,12 @@
 package br.com.curso.springboot.sistemavendas.service;
 
+import br.com.curso.springboot.sistemavendas.domain.entity.ClienteEntity;
 import br.com.curso.springboot.sistemavendas.domain.entity.ProdutoEntity;
 import br.com.curso.springboot.sistemavendas.domain.repository.ProdutoRepository;
 import br.com.curso.springboot.sistemavendas.rest.dto.ProdutoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,11 +100,37 @@ public class ProdutoService {
         return produtoRepository.findByDsProdutoContaining(dsProduto);
     }
 
-
     //Salvar DTO
+    @Transactional
+    public String cadastrarProduto(ProdutoDTO produtoDTO){
+        ProdutoEntity produtoEntity = new ProdutoEntity();
+
+        produtoEntity = conversaoProdutoEntity(produtoDTO, produtoEntity);
+
+        produtoRepository.save(produtoEntity);
+
+        return "Produto cadastrado com sucesso.";
+    }
 
     //Alterar DTO
+    @Transactional
+    public String alterarProduto(ProdutoDTO produtoDTO, Integer cdProduto){
+
+        ProdutoEntity produtoEntity = getProduto(cdProduto);
+        produtoEntity = conversaoProdutoEntity(produtoDTO, produtoEntity);
+
+        produtoRepository.save(produtoEntity);
+
+        return "Produto alterado com sucesso.";
+    }
 
     //Excluir DTO
+    @Transactional
+    public String excluirProduto(Integer cdProduto){
+
+        produtoRepository.deleteById(cdProduto);
+
+        return "Produto alterado com sucesso.";
+    }
 
 }

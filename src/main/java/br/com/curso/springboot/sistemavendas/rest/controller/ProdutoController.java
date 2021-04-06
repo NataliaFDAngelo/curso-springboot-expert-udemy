@@ -29,59 +29,56 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.OK).body(produtoDTOS);
     }
 
-//    @GetMapping("/produto/filtro")
-//    public ResponseEntity buscarProdutoNome(@PathParam ("nome") String nome){
-//
-//        List<ProdutoEntity> produtoEntityBuscado = produtoService.buscarProdutoPorNome(nome);
-//
-//        if(produtoEntityBuscado.isEmpty()) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nenhum produto encontrado.");
-//        }
-//        return ResponseEntity.status(HttpStatus.OK).body(produtoEntityBuscado);
-//    }
-//
-//    @GetMapping("/produto/{id}")
-//    public ResponseEntity buscaProdutoId(@PathVariable("id") Integer id){
-//
-//        Optional<ProdutoEntity> produtoOptional = produtoService.buscarProdutoPorId(id);
-//
-//        if(produtoOptional.isPresent()) {
-//            return ResponseEntity.status(HttpStatus.OK).body(produtoOptional);
-//        }
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nenhum produto encontrado.");
-//
-//    }
-//
-//    @PostMapping("/produto")
-//    public ResponseEntity salvarProduto(@RequestBody ProdutoEntity produtoEntity){
-//
-//        ProdutoEntity produtoEntityNovo = produtoService.salvarProduto(produtoEntity);
-//
-//        return ResponseEntity.status(HttpStatus.CREATED).body("Produto cadastrado com sucesso" + produtoEntityNovo);
-//
-//    }
-//
-//    @PutMapping("produto/{id}")
-//    public ResponseEntity alterarProduto(@RequestBody ProdutoEntity produtoEntity, @PathVariable("id") Integer id){
-//
-//        Boolean retorno = produtoService.atualizarProduto(produtoEntity, id);
-//
-//        if(retorno){
-//            return ResponseEntity.status(HttpStatus.OK).body("Produto alterado com sucesso.");
-//        }
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Produto não alterado.");
-//    }
-//
-//    @DeleteMapping("/produto/{id}")
-//    public ResponseEntity excluirProduto(@PathVariable("id") Integer id){
-//
-//        Boolean retorno = produtoService.deletarProduto(id);
-//
-//        if(retorno){
-//            return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso.");
-//        }
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Produto não deletado.");
-//    }
+    @GetMapping("/produto/filtro")
+    public ResponseEntity buscarProdutoNome(@PathParam ("dsProduto") String dsProduto){
+
+        List<ProdutoEntity> produtoEntityBuscado = produtoService.getProdutoByName(dsProduto);
+
+        if(produtoEntityBuscado.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nenhum produto encontrado.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(produtoEntityBuscado);
+    }
+
+    @GetMapping("/produto/{id}")
+    public ResponseEntity buscaProdutoId(@PathVariable("id") Integer id){
+
+        ProdutoEntity produtoOptional = produtoService.getProduto(id);
+
+        if(produtoOptional == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nenhum produto encontrado.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(produtoOptional);
+
+    }
+
+    @PostMapping("/produto")
+    public ResponseEntity salvarProduto(@RequestBody ProdutoDTO produtoDTO){
+
+        String produtoNovoDTO = produtoService.cadastrarProduto(produtoDTO);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("Produto cadastrado com sucesso.");
+    }
+
+    @PutMapping("produto/{cdProduto}")
+    public ResponseEntity altualizarProduto(@RequestBody ProdutoDTO produtoDTO, @PathVariable("cdProduto") Integer cdProduto){
+
+        String retornoProduto = produtoService.alterarProduto(produtoDTO, cdProduto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(retornoProduto);
+
+    }
+
+    @DeleteMapping("/produto/{cdProduto}")
+    public ResponseEntity deletarProduto(@PathVariable("cdProduto") Integer cdProduto){
+
+        String retorno = produtoService.excluirProduto(cdProduto);
+
+        if(retorno == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Produto não deletado.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso.");
+    }
 
 
 }

@@ -66,16 +66,16 @@ public class ClienteController {
 
         String clienteDTONovo = clienteService.cadastrarCliente(clienteDTO);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("Cliente salvo com sucesso" + clienteDTONovo);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Cliente salvo com sucesso.");
     }
 
 
     @PutMapping("/cliente/{id}")
     public ResponseEntity atualizarCliente(@RequestBody ClienteDTO clienteDTO, @PathVariable("id") Integer id){
 
-        String returnCiente = clienteService.alterarCliente(clienteDTO, id);
+        String retornoCiente = clienteService.alterarCliente(clienteDTO, id);
 
-        return ResponseEntity.status(HttpStatus.OK).body(returnCiente);
+        return ResponseEntity.status(HttpStatus.OK).body(retornoCiente);
     }
 
     @DeleteMapping("cliente/{id}")
